@@ -45,7 +45,7 @@ class _EditMedicalFolderThreeScreenState
     Tools().getCurrentUser().then((value) async {
       MedicalFolder medicalFolder =
           MedicalFolder.fromJson(await SessionManager().get("medicalFolder"));
-      print(medicalFolder.toJson());
+
       setState(() {
         _loading = false;
         medicalFolder.renale == 'Oui' ? _renale = false : _renale = true;

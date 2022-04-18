@@ -263,7 +263,7 @@ class Tools {
             '0.69', '1.80', '2.50', '0.69', '1.80', '2.50', '6.0', '10000');
         await Api().completUser(user).then(
           (value) async {
-            print(value);
+            debugPrint(value);
             if (value == "RECORD_CREATED_SUCCESSFULLY") {
               Navigator.pushReplacement(
                 context,
@@ -411,5 +411,33 @@ class Tools {
     if (valueEight.isEmpty) success = false;
 
     return success;
+  }
+
+  List<DropdownMenuItem<ListItem>>? buildGlucoseDropDownMenuItems(
+      List listItems) {
+    List<DropdownMenuItem<ListItem>>? items = [];
+    for (ListItem listItem in listItems) {
+      items.add(
+        DropdownMenuItem(
+          child: Row(children: [
+            listItem.name == "Avant repas"
+                ? Image.asset(
+                    "assets/images/image_1.png",
+                    height: 25.h,
+                  )
+                : Image.asset(
+                    "assets/images/image_2.png",
+                    height: 25.h,
+                  ),
+            SizedBox(
+              width: 2.5.w,
+            ),
+            Text(listItem.name),
+          ]),
+          value: listItem,
+        ),
+      );
+    }
+    return items;
   }
 }

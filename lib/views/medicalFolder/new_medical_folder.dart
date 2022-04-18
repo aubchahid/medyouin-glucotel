@@ -63,8 +63,8 @@ class _NewMedicalFolderScreenState extends State<NewMedicalFolderScreen> {
     Tools().getCurrentUser().then((value) async {
       setState(() {
         currentUser = value;
-        currentUser!.typeDiabet == "1" ? _type = false : _type = true;
-        currentUser!.typeDiabet == "1"
+        currentUser!.typeDiabet == "Type 1" ? _type = false : _type = true;
+        currentUser!.typeDiabet == "Type 1"
             ? _insulineString = 'Oui'
             : _insulineString = 'Non';
         _sizeController.text = currentUser!.size;
@@ -380,7 +380,7 @@ class _NewMedicalFolderScreenState extends State<NewMedicalFolderScreen> {
                                       onTap: () {
                                         setState(() {
                                           _type = false;
-                                          _typeDiabete = "1";
+                                          _typeDiabete = "Type 1";
                                           _insulineDepuis.text = '-';
                                           _insulineString = 'Non';
                                         });
@@ -415,7 +415,7 @@ class _NewMedicalFolderScreenState extends State<NewMedicalFolderScreen> {
                                       onTap: () {
                                         setState(() {
                                           _type = true;
-                                          _typeDiabete = "2";
+                                          _typeDiabete = "Type 2";
                                           _insulineDepuis.text = '';
                                         });
                                       },

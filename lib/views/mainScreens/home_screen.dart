@@ -2,12 +2,16 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:glucotel/functions/api.dart';
 import 'package:glucotel/functions/tools.dart';
 import 'package:glucotel/model/Blog.dart';
 import 'package:glucotel/model/user.dart';
+import 'package:glucotel/views/carnetGlycemic/carnet_glycemique_start.dart';
+import 'package:glucotel/views/carnetGlycemic/details_carnet_glycemique.dart';
 import 'package:glucotel/widgets/BlogCardOneType.dart';
 import 'package:intl/intl.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -175,7 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     GaugeRange(
                                       label: "Hypo",
                                       labelStyle: GaugeTextStyle(
-                                        fontFamily: "NunitoBold",
+                                        fontFamily: "CairoBold",
                                         fontSize: 12.sp,
                                         color: Colors.white,
                                       ),
@@ -190,7 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     GaugeRange(
                                       label: "Ok",
                                       labelStyle: GaugeTextStyle(
-                                        fontFamily: "NunitoBold",
+                                        fontFamily: "CairoBold",
                                         fontSize: 12.sp,
                                         color: Colors.white,
                                       ),
@@ -205,7 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     GaugeRange(
                                       label: "Elevé",
                                       labelStyle: GaugeTextStyle(
-                                        fontFamily: "NunitoBold",
+                                        fontFamily: "CairoBold",
                                         fontSize: 12.sp,
                                         color: Colors.white,
                                       ),
@@ -220,7 +224,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     GaugeRange(
                                       label: "Hyper",
                                       labelStyle: GaugeTextStyle(
-                                        fontFamily: "NunitoBold",
+                                        fontFamily: "CairoBold",
                                         fontSize: 12.sp,
                                         color: Colors.white,
                                       ),
@@ -270,7 +274,27 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               15.verticalSpace,
               InkWell(
-                onTap: () {},
+                onTap: () async {
+                  bool isTrue = await SessionManager().containsKey("carnet");
+                  if (isTrue) {
+                    pushNewScreen(
+                      context,
+                      screen: const GlycemiqueDetails(),
+                      pageTransitionAnimation:
+                          PageTransitionAnimation.slideRight,
+                      withNavBar: false,
+                    );
+                  } else {
+                    Navigator.pop(context);
+                    pushNewScreen(
+                      context,
+                      screen: const GlycemicLogFirst(),
+                      pageTransitionAnimation:
+                          PageTransitionAnimation.slideRight,
+                      withNavBar: false,
+                    );
+                  }
+                },
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20.w),
                   child: Container(

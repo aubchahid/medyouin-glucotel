@@ -2,6 +2,10 @@
 
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
+import 'package:glucotel/views/RemindersScreen/mds_screen.dart';
+import 'package:glucotel/views/RemindersScreen/rdv_screen.dart';
+import 'package:glucotel/views/RemindersScreen/water_reminder_resultat.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -42,7 +46,7 @@ class NotificationService {
   }
 
   Future selectNotification(String? payload) async {
-    /* if (payload! == "mds") {
+    if (payload! == "mds") {
       Get.to(() => const MedsScreen());
     }
     if (payload == "Rdv") {
@@ -50,7 +54,7 @@ class NotificationService {
     }
     if (payload == "water") {
       Get.to(() => const WaterReminderResultat());
-    } */
+    }
   }
 
   Future<void> showNotification(int id, String title, String body) async {

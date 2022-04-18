@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:glucotel/model/Aliment.dart';
 import 'package:glucotel/model/Blog.dart';
+import 'package:glucotel/model/Glucose.dart';
+import 'package:glucotel/model/Jour.dart';
 import 'package:glucotel/model/MedicalFolder.dart';
 import 'package:glucotel/model/Reminder.dart';
 import 'package:glucotel/model/RendezVous.dart';
@@ -124,6 +126,72 @@ class Api {
       "action": "updateUser",
     });
     return json.decode(response.body);
+  }
+
+  Future<List<Glucose>> selectStats(uid) async {
+    List<Glucose> stats = [];
+    int i;
+    var url = Uri.parse(api + "glucose");
+    final response =
+        await http.post(url, body: {"uid": uid, "action": "selectStats"});
+    if (response.statusCode == 200) {
+      try {
+        List<dynamic> list = jsonDecode(response.body);
+        for (i = 0; i < list.length; i++) {
+          Glucose glucose = Glucose.fromJson(list[i]);
+          stats.add(glucose);
+        }
+        return stats;
+      } catch (e) {
+        return stats;
+      }
+    } else {
+      throw Exception('Error');
+    }
+  }
+
+  Future<List<Glucose>> weeklyStats(uid) async {
+    List<Glucose> stats = [];
+    int i;
+    var url = Uri.parse(api + "glucose");
+    final response =
+        await http.post(url, body: {"uid": uid, "action": "weeklyStats"});
+    if (response.statusCode == 200) {
+      try {
+        List<dynamic> list = jsonDecode(response.body);
+        for (i = 0; i < list.length; i++) {
+          Glucose glucose = Glucose.fromJson(list[i]);
+          stats.add(glucose);
+        }
+        return stats;
+      } catch (e) {
+        return stats;
+      }
+    } else {
+      throw Exception('Error');
+    }
+  }
+
+  Future<List<Glucose>> monthlyStats(uid) async {
+    List<Glucose> stats = [];
+    int i;
+    var url = Uri.parse(api + "glucose");
+    final response =
+        await http.post(url, body: {"uid": uid, "action": "monthlyStats"});
+    if (response.statusCode == 200) {
+      try {
+        List<dynamic> list = jsonDecode(response.body);
+        for (i = 0; i < list.length; i++) {
+          Glucose glucose = Glucose.fromJson(list[i]);
+          stats.add(glucose);
+        }
+        return stats;
+      } catch (e) {
+        return stats;
+      }
+    } else {
+      throw Exception('Error');
+    }
   }
 
   Future<String> updaterProfile(User user) async {
@@ -268,7 +336,6 @@ class Api {
     } else {
       throw Exception('Error');
     }
-    print(rdvs.length);
   }
 
   Future<String> folderMedical(
@@ -340,6 +407,71 @@ class Api {
       "durillion": folderMedical.durillion,
       "action": "updatefolderMedical",
     });
+    return json.decode(response.body);
+  }
+
+  Future<String> insertStats(
+      uid, value, date, period, hour, minute, day, month, year) async {
+    var url = Uri.parse(api + "glucose");
+    final response = await http.post(url, body: {
+      "uid": uid,
+      "value": value,
+      "date": date,
+      "period": period,
+      "hour": hour,
+      "minute": minute,
+      "day": day,
+      "month": month,
+      "year": year,
+      "action": "insertStats"
+    });
+    return json.decode(response.body);
+  }
+
+  Future<String> insertLog(uid, startAt, endAt) async {
+    var url = Uri.parse(api + "glucose");
+    final response = await http.post(url, body: {
+      "uid": uid.toString(),
+      "start": startAt,
+      "end": endAt,
+      "action": "insertLog"
+    });
+    return json.decode(response.body).toString();
+  }
+
+  Future<List<Jour>> getDetails(id) async {
+    int i;
+    List<Jour> entries = [];
+    var url = Uri.parse(api + "glucose");
+    final response = await http.post(url, body: {
+      "idcarnet": id.toString(),
+      "action": "getDetails",
+    });
+    if (response.statusCode == 200) {
+      List<dynamic> list = jsonDecode(response.body);
+      for (i = 0; i < list.length; i++) {
+        Jour entry = Jour.fromJson(list[i]);
+        entries.add(entry);
+      }
+      return entries;
+    } else {
+      throw Exception('Error');
+    }
+  }
+
+  Future<String> insertDetails(
+      idcarnet, value, date, period, text, note) async {
+    var url = Uri.parse(api + "glucose");
+    final response = await http.post(url, body: {
+      "idcarnet": idcarnet.toString(),
+      "date": date,
+      "value": value,
+      "period": period,
+      "text": text,
+      "note": note,
+      "action": "insertDetails"
+    });
+    print(response.body);
     return json.decode(response.body);
   }
 }

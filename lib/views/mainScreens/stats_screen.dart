@@ -1,12 +1,15 @@
 // ignore_for_file: file_names
 
+import 'package:boxicons/boxicons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:glucotel/functions/Tools.dart';
+import 'package:glucotel/functions/api.dart';
 import 'package:glucotel/model/user.dart';
+import 'package:glucotel/views/StatsScreen/glucose_stats_screen.dart';
 import 'package:intl/intl.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class MyStats extends StatefulWidget {
@@ -20,12 +23,8 @@ class _MyStatsState extends State<MyStats> {
   DateTime dateTime = DateTime.now();
   User? currentUser;
   bool isLoading = false;
-
-  setTomorrowDate() async {
-    String dateTime = await SessionManager().get('tomorrow');
-    DateTime tomorrow = DateTime.parse(dateTime).add(const Duration(hours: 1));
-    await SessionManager().set('tomorrow', tomorrow.toString());
-  }
+  double? value;
+  String? lastValue;
 
   returnValuePin(value) {
     double val = 0;
@@ -46,35 +45,27 @@ class _MyStatsState extends State<MyStats> {
     return val;
   }
 
-  double? val;
   getData(date) async {
-    await Tools().getCurrentUser().then((value) async {
+    currentUser = await Tools().getCurrentUser();
+    await Api().getLastValue(currentUser!.id, date).then((i) async {
       setState(() {
-        currentUser = value;
+        if (i == "0") {
+          lastValue = '-.-';
+          value = 0;
+        } else {
+          lastValue = i;
+          value = returnValuePin(i);
+        }
+        isLoading = true;
       });
-      /* await MySql().getLastValue(currentUser!.id, date).then((value) {
-        setState(() {
-          if (value == "0") {
-            lastValue = '-.-';
-            val = 0;
-          } else {
-            lastValue = value;
-            val = returnValuePin(lastValue);
-          }
-          isLoading = true;
-        });
-      }); */
     });
   }
-
-  String lastValue = '-.-';
-  int stps = 0;
 
   @override
   void initState() {
     super.initState();
     if (mounted) {
-      String date = DateFormat("yyyy-MM-dd", "Fr_fr").format(DateTime.now());
+      String date = DateFormat("dd-MM-yyyy", "Fr_fr").format(DateTime.now());
       WidgetsBinding.instance?.addPostFrameCallback((_) async {
         await getData(date);
         dateTime = DateTime.now();
@@ -99,66 +90,64 @@ class _MyStatsState extends State<MyStats> {
                     textAlign: TextAlign.start,
                     style: TextStyle(
                       fontSize: 16.sp,
-                      fontFamily: 'NunitoSemiBold',
+                      fontFamily: 'CairoSemiBold',
                       color: Theme.of(context).primaryColorDark,
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 5.h,
-                ),
+                5.verticalSpace,
                 GestureDetector(
                   onTap: () {
-                    /* pushNewScreen(
+                    pushNewScreen(
                       context,
                       screen: const GlucoseStats(),
                       pageTransitionAnimation:
                           PageTransitionAnimation.slideRight,
                       withNavBar: false,
-                    ); */
+                    );
                   },
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20.0.w),
-                    height: 215.h,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).backgroundColor,
-                      borderRadius: BorderRadius.circular(5),
-                      border: Border.all(
-                          color: Theme.of(context).primaryColor, width: 1.4.w),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.all(4.0.w),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.0.w),
+                    child: Container(
+                      height: 215.h,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).backgroundColor,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                            color: Theme.of(context).primaryColor,
+                            width: 1.4.w),
+                      ),
                       child: Column(
                         children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(
-                                CupertinoIcons.drop_fill,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                              Text(
-                                'Dernière valeur Glucose',
-                                style: TextStyle(
-                                  fontFamily: 'NunitoRegular',
-                                  fontSize: 14.sp,
-                                  color: Theme.of(context).primaryColorDark,
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 5.w, vertical: 10.h),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  CupertinoIcons.drop_fill,
+                                  color: Theme.of(context).primaryColor,
                                 ),
-                              ),
-                              const Spacer(),
-                              Text(
-                                DateFormat("dd MMM yyyy", "Fr_fr")
-                                    .format(dateTime),
-                                style: TextStyle(
-                                  fontFamily: 'NunitoSemiBold',
-                                  fontSize: 14.sp,
-                                  color: Theme.of(context).primaryColorDark,
+                                Text(
+                                  'Dernière valeur Glucose',
+                                  style: TextStyle(
+                                    fontFamily: 'CairoSemiBold',
+                                    fontSize: 14.sp,
+                                    color: Theme.of(context).primaryColorDark,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 15.w,
-                              ),
-                            ],
+                                const Spacer(),
+                                Text(
+                                  DateFormat("dd-MM-yyyy", "Fr_fr")
+                                      .format(DateTime.now()),
+                                  style: TextStyle(
+                                    fontFamily: 'CairoSemiBold',
+                                    fontSize: 14.sp,
+                                    color: Theme.of(context).primaryColorDark,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                           const Spacer(),
                           Center(
@@ -176,7 +165,7 @@ class _MyStatsState extends State<MyStats> {
                                       GaugeRange(
                                         label: "Hypo",
                                         labelStyle: GaugeTextStyle(
-                                          fontFamily: "NunitoBold",
+                                          fontFamily: "CairoBold",
                                           fontSize: 12.sp,
                                           color: Colors.white,
                                         ),
@@ -191,7 +180,7 @@ class _MyStatsState extends State<MyStats> {
                                       GaugeRange(
                                         label: "Ok",
                                         labelStyle: GaugeTextStyle(
-                                          fontFamily: "NunitoBold",
+                                          fontFamily: "CairoBold",
                                           fontSize: 12.sp,
                                           color: Colors.white,
                                         ),
@@ -206,7 +195,7 @@ class _MyStatsState extends State<MyStats> {
                                       GaugeRange(
                                         label: "Elevé",
                                         labelStyle: GaugeTextStyle(
-                                          fontFamily: "NunitoBold",
+                                          fontFamily: "CairoBold",
                                           fontSize: 12.sp,
                                           color: Colors.white,
                                         ),
@@ -221,7 +210,7 @@ class _MyStatsState extends State<MyStats> {
                                       GaugeRange(
                                         label: "Hyper",
                                         labelStyle: GaugeTextStyle(
-                                          fontFamily: "NunitoBold",
+                                          fontFamily: "CairoBold",
                                           fontSize: 12.sp,
                                           color: Colors.white,
                                         ),
@@ -234,11 +223,11 @@ class _MyStatsState extends State<MyStats> {
                                         endWidth: 0.30,
                                       ),
                                     ],
-                                    pointers: val != 0
+                                    pointers: value != 0
                                         ? <GaugePointer>[
                                             NeedlePointer(
-                                              value:
-                                                  double.parse(val.toString()),
+                                              value: double.parse(
+                                                  value.toString()),
                                               lengthUnit: GaugeSizeUnit.factor,
                                             )
                                           ]
@@ -246,14 +235,14 @@ class _MyStatsState extends State<MyStats> {
                                     annotations: <GaugeAnnotation>[
                                       GaugeAnnotation(
                                         widget: Text(
-                                          lastValue + '\n g/l ',
+                                          lastValue! + '\n gl/l ',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
-                                            fontSize: 14.sp,
-                                            fontFamily: 'NunitoSemiBold',
-                                            color: Theme.of(context)
-                                                .primaryColorDark,
-                                          ),
+                                              fontSize: 14.sp,
+                                              fontFamily: 'CairoSemiBold',
+                                              color: Theme.of(context)
+                                                  .primaryColorDark,
+                                              height: 1.2),
                                         ),
                                         angle: 90,
                                         positionFactor: 0.8,
@@ -269,8 +258,116 @@ class _MyStatsState extends State<MyStats> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 10.h,
+                10.verticalSpace,
+                GestureDetector(
+                  onTap: () {},
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.0.w),
+                    child: Container(
+                      height: 215.h,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).backgroundColor,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                            color: Theme.of(context).primaryColor,
+                            width: 1.4.w),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 5.w, vertical: 10.h),
+                        child: Column(
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Boxicons.bxs_archive_out,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                Text(
+                                  'HBA1C',
+                                  style: TextStyle(
+                                    fontFamily: 'CairoRegular',
+                                    fontSize: 14.sp,
+                                    color: Theme.of(context).primaryColorDark,
+                                  ),
+                                ),
+                                const Spacer(),
+                                Text(
+                                  DateFormat("dd-MM-yyyy", "Fr_fr")
+                                      .format(DateTime.now()),
+                                  style: TextStyle(
+                                    fontFamily: 'CairoSemiBold',
+                                    fontSize: 14.sp,
+                                    color: Theme.of(context).primaryColorDark,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const Spacer(),
+                            Center(
+                              child: SizedBox(
+                                height: 145.h,
+                                child: SfRadialGauge(
+                                  axes: <RadialAxis>[
+                                    RadialAxis(
+                                      showLabels: false,
+                                      showAxisLine: false,
+                                      showTicks: false,
+                                      minimum: 0,
+                                      maximum:
+                                          double.parse(currentUser!.hba1c) * 2,
+                                      ranges: <GaugeRange>[
+                                        GaugeRange(
+                                          startValue: 0,
+                                          endValue:
+                                              double.parse(currentUser!.hba1c),
+                                          color: const Color.fromRGBO(
+                                              111, 193, 34, 1),
+                                          sizeUnit: GaugeSizeUnit.factor,
+                                          startWidth: 0.30,
+                                          endWidth: 0.30,
+                                        ),
+                                        GaugeRange(
+                                          startValue:
+                                              double.parse(currentUser!.hba1c),
+                                          endValue:
+                                              double.parse(currentUser!.hba1c) *
+                                                  2,
+                                          color: const Color.fromRGBO(
+                                              251, 187, 43, 1),
+                                          sizeUnit: GaugeSizeUnit.factor,
+                                          startWidth: 0.30,
+                                          endWidth: 0.30,
+                                        ),
+                                      ],
+                                      pointers: const <GaugePointer>[],
+                                      annotations: <GaugeAnnotation>[
+                                        GaugeAnnotation(
+                                          widget: Text(
+                                            '-.-',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontSize: 14.sp,
+                                              fontFamily: 'CairoSemiBold',
+                                              color: Theme.of(context)
+                                                  .primaryColorDark,
+                                            ),
+                                          ),
+                                          angle: 90,
+                                          positionFactor: 0.8,
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),

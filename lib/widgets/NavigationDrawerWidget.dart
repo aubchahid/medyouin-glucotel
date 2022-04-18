@@ -10,6 +10,8 @@ import 'package:glucotel/functions/auth.dart';
 import 'package:glucotel/model/MedicalFolder.dart';
 import 'package:glucotel/model/user.dart';
 import 'package:glucotel/views/blogsScreens/blog_screen.dart';
+import 'package:glucotel/views/carnetGlycemic/carnet_glycemique_start.dart';
+import 'package:glucotel/views/carnetGlycemic/details_carnet_glycemique.dart';
 import 'package:glucotel/views/dieteScreen/depense_energetic_calculatrice.dart';
 import 'package:glucotel/views/dieteScreen/diete_calculatrice_screen.dart';
 import 'package:glucotel/views/dieteScreen/diete_screen.dart';
@@ -96,7 +98,26 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                   buildMenuItem(
                     text: 'Mon Carnet Glycemique',
                     icon: Boxicons.bxs_book_content,
-                    onClicked: () async {},
+                    onClicked: () async {
+                      bool isTrue =
+                          await SessionManager().containsKey("carnet");
+                      if (isTrue) {
+                        pushNewScreen(
+                          context,
+                          screen: const GlycemiqueDetails(),
+                          pageTransitionAnimation:
+                              PageTransitionAnimation.slideRight,
+                        );
+                      } else {
+                        Navigator.pop(context);
+                        pushNewScreen(
+                          context,
+                          screen: const GlycemicLogFirst(),
+                          pageTransitionAnimation:
+                              PageTransitionAnimation.slideRight,
+                        );
+                      }
+                    },
                   ),
                   2.verticalSpace,
                   buildMenuItem(

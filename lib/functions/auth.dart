@@ -213,10 +213,10 @@ class Auth {
       isSuccess = true;
     } on FirebaseAuthException catch (e) {
       isSuccess = false;
-      print(e.toString());
+      debugPrint(e.toString());
     } catch (e) {
       isSuccess = false;
-      print(e.toString());
+      debugPrint(e.toString());
     }
     return isSuccess;
   }

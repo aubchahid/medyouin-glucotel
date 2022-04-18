@@ -25,7 +25,7 @@ class _EditMedicalFolderScreenState extends State<EditMedicalFolderScreen> {
   bool _mutuelle = false;
   bool _regime = false;
   bool _insuline = false;
-  String _typeDiabete = "1";
+  String _typeDiabete = "Type 1";
   String _mutuelleString = "Oui";
   String _regimeString = "Oui";
   String _insulineString = "Oui";
@@ -63,8 +63,8 @@ class _EditMedicalFolderScreenState extends State<EditMedicalFolderScreen> {
           MedicalFolder.fromJson(await SessionManager().get("medicalFolder"));
       setState(() {
         currentUser = value;
-        currentUser!.typeDiabet == "1" ? _type = false : _type = true;
-        _type ? _typeDiabete = '2' : _typeDiabete = '1';
+        currentUser!.typeDiabet == "Type 1" ? _type = false : _type = true;
+        _type ? _typeDiabete = 'Type 2' : _typeDiabete = '1';
         _sizeController.text = currentUser!.size;
         _weightController.text = currentUser!.weight;
         medicalFolder.mutuele == 'Oui' ? _mutuelle = true : _mutuelle = false;
@@ -415,7 +415,7 @@ class _EditMedicalFolderScreenState extends State<EditMedicalFolderScreen> {
                                       onTap: () {
                                         setState(() {
                                           _type = false;
-                                          _typeDiabete = "1";
+                                          _typeDiabete = "Type 1";
                                           _insulineDepuis.text = '-';
                                           _insulineString = 'Non';
                                         });
@@ -450,7 +450,7 @@ class _EditMedicalFolderScreenState extends State<EditMedicalFolderScreen> {
                                       onTap: () {
                                         setState(() {
                                           _type = true;
-                                          _typeDiabete = "2";
+                                          _typeDiabete = "Type 2";
                                           _insulineDepuis.text = '';
                                         });
                                       },

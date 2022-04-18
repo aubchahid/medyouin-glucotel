@@ -582,97 +582,99 @@ class _WaterBoardingState extends State<WaterBoarding> {
           ],
           elevation: 0,
         ),
-        body: Column(
-          children: [
-            const Spacer(),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 35.w),
-              child: Text(
-                "La quantité d'eau optimale que vous dévez boire tous les jours est :\n" +
-                    dailyQte!.toStringAsFixed(0) +
-                    "ml",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: "CairoSemiBold",
-                  fontSize: 16.sp,
-                  color: Theme.of(context).primaryColorDark,
-                ),
-              ),
-            ),
-            const Spacer(),
-            Image.asset(
-              'assets/images/cup.png',
-              height: 75.h,
-            ),
-            const Spacer(),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 35.w),
-              child: Text(
-                "Ne vous inquiétez pas, vous serez notifiés tout au long de la journée pour atteindre votre objectif",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: "CairoSemiBold",
-                  fontSize: 16.sp,
-                  color: Theme.of(context).primaryColorDark,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 10.h,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 35.w),
-              child: Text(
-                "Ce rappel sera activé à partir de demain",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: "CairoSemiBold",
-                  fontSize: 16.sp,
-                  color: Colors.red,
-                ),
-              ),
-            ),
-            const Spacer(),
-            Image.asset(
-              'assets/images/cuo_2.png',
-              height: 105.h,
-            ),
-            const Spacer(),
-            Center(
-              child: InkWell(
-                onTap: () async {
-                  Navigator.push(
-                    context,
-                    PageTransition(
-                      child: const WaterReminderResultat(),
-                      type: PageTransitionType.rightToLeft,
-                    ),
-                  );
-                },
-                child: Container(
-                  height: 55.h,
-                  width: 220.w,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(
-                    "Commencez",
-                    style: TextStyle(
-                      fontFamily: 'CairoBold',
-                      fontSize: 14.sp,
-                      color: Theme.of(context).scaffoldBackgroundColor,
+        body: dailyQte == null
+            ? const Center(child: CircularProgressIndicator())
+            : Column(
+                children: [
+                  const Spacer(),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 35.w),
+                    child: Text(
+                      "La quantité d'eau optimale que vous dévez boire tous les jours est :\n" +
+                          dailyQte!.toStringAsFixed(0) +
+                          "ml",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: "CairoSemiBold",
+                        fontSize: 16.sp,
+                        color: Theme.of(context).primaryColorDark,
+                      ),
                     ),
                   ),
-                ),
+                  const Spacer(),
+                  Image.asset(
+                    'assets/images/cup.png',
+                    height: 75.h,
+                  ),
+                  const Spacer(),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 35.w),
+                    child: Text(
+                      "Ne vous inquiétez pas, vous serez notifiés tout au long de la journée pour atteindre votre objectif",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: "CairoSemiBold",
+                        fontSize: 16.sp,
+                        color: Theme.of(context).primaryColorDark,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 35.w),
+                    child: Text(
+                      "Ce rappel sera activé à partir de demain",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: "CairoSemiBold",
+                        fontSize: 16.sp,
+                        color: Colors.red,
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  Image.asset(
+                    'assets/images/cuo_2.png',
+                    height: 105.h,
+                  ),
+                  const Spacer(),
+                  Center(
+                    child: InkWell(
+                      onTap: () async {
+                        Navigator.push(
+                          context,
+                          PageTransition(
+                            child: const WaterReminderResultat(),
+                            type: PageTransitionType.rightToLeft,
+                          ),
+                        );
+                      },
+                      child: Container(
+                        height: 55.h,
+                        width: 220.w,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Text(
+                          "Commencez",
+                          style: TextStyle(
+                            fontFamily: 'CairoBold',
+                            fontSize: 14.sp,
+                            color: Theme.of(context).scaffoldBackgroundColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 80.h,
+                  ),
+                ],
               ),
-            ),
-            SizedBox(
-              height: 80.h,
-            ),
-          ],
-        ),
       ),
     );
   }

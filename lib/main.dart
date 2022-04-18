@@ -6,6 +6,7 @@ import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:glucotel/SplashScreen.dart';
 //import 'package:glucotel/SplashScreen.dart';
 import 'package:glucotel/firebase_options.dart';
+import 'package:glucotel/functions/notification.dart';
 import 'package:glucotel/views/mainScreens/main_screen.dart';
 
 void main() async {
@@ -13,6 +14,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  NotificationService().initNotification();
   bool isLoggedIn = await SessionManager().get("isLoggedIn") ?? false;
   Widget mainPage;
   isLoggedIn

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "691014317540",
+    "project_id": "medyouin-glucotel",
+    "storage_bucket": "medyouin-glucotel.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:691014317540:android:bba5568c4ef81112a143f1",
+        "android_client_info": {
+          "package_name": "com.apps.glucotel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "691014317540-g7gtcp3q3rh7bfnhn8p2afkiaodm4jdd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZo6QY_nQq5_58Yz0jyCiwsr1DwFwmpWc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "691014317540-g7gtcp3q3rh7bfnhn8p2afkiaodm4jdd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

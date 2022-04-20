@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:achievement_view/achievement_view.dart';
 import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
@@ -7,9 +9,11 @@ import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:glucotel/functions/api.dart';
 import 'package:glucotel/model/ListItem.dart';
 import 'package:glucotel/model/user.dart';
+import 'package:glucotel/views/carnetGlycemic/carnet_glycemique_start.dart';
 import 'package:glucotel/views/mainScreens/main_screen.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:intl/intl.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class Tools {
   Future<bool> loginFormValidator(String _email, String _passowrd, context) {
@@ -125,6 +129,80 @@ class Tools {
     );
   }
 
+  newCarnetGly(BuildContext context, message) {
+    // set up the button
+    Widget cancelButton = TextButton(
+      child: Text(
+        "Non",
+        style: TextStyle(
+          fontFamily: "CairoBold",
+          fontSize: 14.sp,
+          color: Theme.of(context).primaryColor,
+        ),
+      ),
+      onPressed: () {
+        Navigator.of(context, rootNavigator: true).pop();
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text(
+        "Oui",
+        style: TextStyle(
+          fontFamily: "CairoBold",
+          fontSize: 14.sp,
+          color: Theme.of(context).primaryColor,
+        ),
+      ),
+      onPressed: () async {
+        await SessionManager().remove("carnet");
+        /* Navigator.pushReplacement(
+          context,
+          PageTransition(
+            child: const GlycemicLogFirst(),
+            type: PageTransitionType.rightToLeft,
+          ),
+        ); */
+        pushNewScreen(
+          context,
+          screen: const GlycemicLogFirst(),
+          pageTransitionAnimation: PageTransitionAnimation.slideRight,
+        );
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Center(
+        child: Icon(
+          Boxicons.bx_error_alt,
+          color: Colors.red,
+          size: 50.h,
+        ),
+      ),
+      content: Text(
+        message,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontFamily: 'CairoBold',
+          fontSize: 14.sp,
+          color: Theme.of(context).primaryColorDark,
+        ),
+      ),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   Future<bool> showAlertDialogExit(BuildContext context) {
     bool exit = false;
     // set up the buttons
@@ -225,7 +303,7 @@ class Tools {
     user.hba1c = hba1c;
     user.stepsPerDay = stepsPerDay;
     user.status = true;
-    await SessionManager().set('user', user);
+    await SessionManager().set('currentUser', user);
     user = User.fromJson(await SessionManager().get("currentUser"));
     return user;
   }
@@ -318,7 +396,7 @@ class Tools {
 
   Future<User?> getCurrentUser() async {
     User currentUser;
-    currentUser = User.fromJson(await SessionManager().get("user"));
+    currentUser = User.fromJson(await SessionManager().get("currentUser"));
     return currentUser;
   }
 
@@ -439,5 +517,15 @@ class Tools {
       );
     }
     return items;
+  }
+
+  Future<bool> hasNetwork() async {
+    try {
+      var result = await InternetAddress.lookup('google.com');
+      //result = await InternetAddress.lookup('glucosql.medyouin.com/');
+      return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
+    } on SocketException catch (_) {
+      return false;
+    }
   }
 }

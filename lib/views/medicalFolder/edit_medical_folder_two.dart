@@ -48,7 +48,6 @@ class _EditMedicalFolderScreenTwoState
     Tools().getCurrentUser().then((value) async {
       MedicalFolder medicalFolder =
           MedicalFolder.fromJson(await SessionManager().get("medicalFolder"));
-      print(medicalFolder.toJson());
       setState(() {
         _isLoading = true;
         medicalFolder.hta == 'Oui' ? _hta = false : _hta = true;

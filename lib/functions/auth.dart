@@ -13,7 +13,7 @@ import 'package:page_transition/page_transition.dart';
 
 class Auth {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['profile', 'email']);
 
   // * Function For Sign in using an email and password
   emailSignIn(_email, _password, context) async {
@@ -29,7 +29,7 @@ class Auth {
           await Api().getUserByEmail(_user.uid).then((value) async {
             await SessionManager().set("isLoggedIn", true);
             await SessionManager().set(
-              "user",
+              "currentUser",
               appuser.User(
                 id: _user.uid,
                 fullname: value['fullname'],
@@ -52,8 +52,32 @@ class Auth {
         if (value == "ACCOUNT-ACTIVE") {
           await Api().getUserByEmail(_user.uid).then((value) async {
             await SessionManager().set("isLoggedIn", true);
-            appuser.User user = appuser.User.fromJson(value);
-            await SessionManager().set("user", user);
+            await SessionManager().set(
+              "currentUser",
+              appuser.User(
+                id: _user.uid,
+                fullname: value['fullname'],
+                email: _user.email.toString(),
+                photoUrl: value['photoUrl'],
+                phoneNo: _user.phoneNumber ?? '-',
+                sexe: value['sexe'],
+                birthdate: value["birthdate"],
+                city: value["city"],
+                size: value["size"],
+                weight: value["weight"],
+                glycPostMealT1: value["glucoPostMealT1"],
+                glycPostMealT2: value["glucoPostMealT2"],
+                glycPostMealT3: value["glucoPostMealT3"],
+                glycPreMealT1: value["glucoPreMealT1"],
+                glycPreMealT2: value["glucoPreMealT2"],
+                glycPreMealT3: value["glucoPreMealT3"],
+                hba1c: value["hba1c"],
+                stepsPerDay: value["stepsPerDay"],
+                typeDiabet: value["typeDiabet"],
+                status: true,
+                isGoogle: true,
+              ),
+            );
             Navigator.pushReplacement(
               context,
               PageTransition(
@@ -166,8 +190,32 @@ class Auth {
         if (value == "ACCOUNT-ACTIVE") {
           Api().getUserByEmail(_user.uid).then((value) async {
             await SessionManager().set("isLoggedIn", true);
-            appuser.User user = appuser.User.fromJson(value);
-            await SessionManager().set("currentUser", user);
+            await SessionManager().set(
+              "currentUser",
+              appuser.User(
+                id: _user.uid,
+                fullname: value['fullname'],
+                email: _user.email.toString(),
+                photoUrl: _user.photoURL!,
+                phoneNo: _user.phoneNumber ?? '-',
+                sexe: value['sexe'],
+                birthdate: value["birthdate"],
+                city: value["city"],
+                size: value["size"],
+                weight: value["weight"],
+                glycPostMealT1: value["glucoPostMealT1"],
+                glycPostMealT2: value["glucoPostMealT2"],
+                glycPostMealT3: value["glucoPostMealT3"],
+                glycPreMealT1: value["glucoPreMealT1"],
+                glycPreMealT2: value["glucoPreMealT2"],
+                glycPreMealT3: value["glucoPreMealT3"],
+                hba1c: value["hba1c"],
+                stepsPerDay: value["stepsPerDay"],
+                typeDiabet: value["typeDiabet"],
+                status: true,
+                isGoogle: true,
+              ),
+            );
             Navigator.pushReplacement(
               context,
               PageTransition(
@@ -229,7 +277,7 @@ class Auth {
         title: Text(
           "Confirmation",
           style: TextStyle(
-            fontFamily: "NunitoBold",
+            fontFamily: "CairoBold",
             fontSize: 14.sp,
             color: Theme.of(context).primaryColor,
           ),
@@ -237,7 +285,7 @@ class Auth {
         content: Text(
           "Êtes-vous certain de vouloir vous déconnecter?",
           style: TextStyle(
-            fontFamily: "NunitoBold",
+            fontFamily: "CairoBold",
             fontSize: 14.sp,
             color: const Color.fromRGBO(48, 49, 52, 1),
           ),
@@ -247,7 +295,7 @@ class Auth {
             child: Text(
               "Non",
               style: TextStyle(
-                fontFamily: "NunitoBold",
+                fontFamily: "CairoBold",
                 fontSize: 14.sp,
                 color: Theme.of(context).primaryColorDark.withOpacity(0.6),
               ),
@@ -260,7 +308,7 @@ class Auth {
             child: Text(
               "Oui",
               style: TextStyle(
-                fontFamily: "NunitoBold",
+                fontFamily: "CairoBold",
                 fontSize: 14.sp,
                 color: Theme.of(context).primaryColor,
               ),

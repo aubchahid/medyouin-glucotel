@@ -171,7 +171,7 @@ class _AddGlycemiqueValueState extends State<AddGlycemiqueValue> {
                           label: Text(
                             "Entre votre valeur",
                             style: TextStyle(
-                              fontFamily: "NunitoRegular",
+                              fontFamily: "CairoSemiBold",
                               fontSize: 14.sp,
                             ),
                           ),
@@ -298,7 +298,7 @@ class _AddGlycemiqueValueState extends State<AddGlycemiqueValue> {
                               "Remarque",
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                fontFamily: "NunitoRegular",
+                                fontFamily: "CairoSemiBold",
                                 fontSize: 14.sp,
                               ),
                             ),

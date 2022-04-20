@@ -50,8 +50,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
           children: [
             buildHeader(
               urlImage: !widget.currentUser!.isGoogle
-                  ? "https://glucosql.medyouin.com/api-v2/pictures/" +
-                      widget.currentUser!.photoUrl
+                  ? "https://glucosql.medyouin.com/api-v2/pictures/default.png"
                   : widget.currentUser!.photoUrl,
               name: widget.currentUser!.fullname,
               email: widget.currentUser!.email,
@@ -102,6 +101,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                       bool isTrue =
                           await SessionManager().containsKey("carnet");
                       if (isTrue) {
+                        Navigator.pop(context);
                         pushNewScreen(
                           context,
                           screen: const GlycemiqueDetails(),

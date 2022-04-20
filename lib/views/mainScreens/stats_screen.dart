@@ -4,10 +4,14 @@ import 'package:boxicons/boxicons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:glucotel/functions/Tools.dart';
 import 'package:glucotel/functions/api.dart';
+import 'package:glucotel/model/GlycemiqueLog.dart';
 import 'package:glucotel/model/user.dart';
 import 'package:glucotel/views/StatsScreen/glucose_stats_screen.dart';
+import 'package:glucotel/views/hba1c/hba1c_first_screen.dart';
+import 'package:glucotel/views/hba1c/hba1c_resultat_screen.dart';
 import 'package:intl/intl.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
@@ -25,6 +29,8 @@ class _MyStatsState extends State<MyStats> {
   bool isLoading = false;
   double? value;
   String? lastValue;
+
+  double? hba1c;
 
   returnValuePin(value) {
     double val = 0;
@@ -56,8 +62,21 @@ class _MyStatsState extends State<MyStats> {
           lastValue = i;
           value = returnValuePin(i);
         }
-        isLoading = true;
       });
+    });
+    if (await SessionManager().containsKey("carnet")) {
+      GlycemiqueLog carnet =
+          GlycemiqueLog.fromJson(await SessionManager().get('carnet'));
+      await Api().getLastHba1c(carnet.uid).then((value) async {
+        setState(() {
+          hba1c = double.parse(value);
+        });
+      });
+    } else {
+      setState(() => hba1c = 0);
+    }
+    setState(() {
+      isLoading = true;
     });
   }
 
@@ -235,7 +254,7 @@ class _MyStatsState extends State<MyStats> {
                                     annotations: <GaugeAnnotation>[
                                       GaugeAnnotation(
                                         widget: Text(
-                                          lastValue! + '\n gl/l ',
+                                          lastValue! + '\n g/l ',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               fontSize: 14.sp,
@@ -260,7 +279,26 @@ class _MyStatsState extends State<MyStats> {
                 ),
                 10.verticalSpace,
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () async {
+                    bool isTrue = await SessionManager().containsKey("hba1c");
+                    if (isTrue) {
+                      pushNewScreen(
+                        context,
+                        screen: const HBA1CResultat(),
+                        pageTransitionAnimation:
+                            PageTransitionAnimation.slideRight,
+                        withNavBar: false,
+                      );
+                    } else {
+                      pushNewScreen(
+                        context,
+                        screen: const HBA1CFirstScreen(),
+                        pageTransitionAnimation:
+                            PageTransitionAnimation.slideRight,
+                        withNavBar: false,
+                      );
+                    }
+                  },
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20.0.w),
                     child: Container(
@@ -285,7 +323,7 @@ class _MyStatsState extends State<MyStats> {
                                   color: Theme.of(context).primaryColor,
                                 ),
                                 Text(
-                                  'HBA1C',
+                                  'HBA1C estimé',
                                   style: TextStyle(
                                     fontFamily: 'CairoRegular',
                                     fontSize: 14.sp,
@@ -293,15 +331,6 @@ class _MyStatsState extends State<MyStats> {
                                   ),
                                 ),
                                 const Spacer(),
-                                Text(
-                                  DateFormat("dd-MM-yyyy", "Fr_fr")
-                                      .format(DateTime.now()),
-                                  style: TextStyle(
-                                    fontFamily: 'CairoSemiBold',
-                                    fontSize: 14.sp,
-                                    color: Theme.of(context).primaryColorDark,
-                                  ),
-                                ),
                               ],
                             ),
                             const Spacer(),
@@ -341,11 +370,23 @@ class _MyStatsState extends State<MyStats> {
                                           endWidth: 0.30,
                                         ),
                                       ],
-                                      pointers: const <GaugePointer>[],
+                                      pointers: hba1c != 0
+                                          ? <GaugePointer>[
+                                              NeedlePointer(
+                                                value: double.parse(
+                                                    hba1c.toString()),
+                                                lengthUnit:
+                                                    GaugeSizeUnit.factor,
+                                              )
+                                            ]
+                                          : <GaugePointer>[],
                                       annotations: <GaugeAnnotation>[
                                         GaugeAnnotation(
                                           widget: Text(
-                                            '-.-',
+                                            hba1c == 0
+                                                ? '-.-'
+                                                : hba1c!.toStringAsFixed(2) +
+                                                    "%",
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                               fontSize: 14.sp,

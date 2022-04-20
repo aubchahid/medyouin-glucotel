@@ -893,7 +893,7 @@ class _GlucoseStatsState extends State<GlucoseStats> {
                                         ),
                                         const Spacer(),
                                         Text(
-                                          _archive[i].value + "ml/l",
+                                          _archive[i].value + "g/l",
                                           style: TextStyle(
                                             color: Theme.of(context)
                                                 .primaryColorDark,

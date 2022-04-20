@@ -4,9 +4,13 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:glucotel/SplashScreen.dart';
+import 'package:glucotel/connectivity_screen.dart';
 //import 'package:glucotel/SplashScreen.dart';
 import 'package:glucotel/firebase_options.dart';
 import 'package:glucotel/functions/notification.dart';
+import 'package:glucotel/functions/tools.dart';
+import 'package:glucotel/model/user.dart';
+import 'package:glucotel/views/complete_profil_screen.dart';
 import 'package:glucotel/views/mainScreens/main_screen.dart';
 
 void main() async {
@@ -16,13 +20,23 @@ void main() async {
   );
   NotificationService().initNotification();
   bool isLoggedIn = await SessionManager().get("isLoggedIn") ?? false;
-  Widget mainPage;
-  isLoggedIn
-      ? mainPage = const MainScreen(
-          index: 0,
-        )
-      : mainPage = const SplashScreen();
+  bool status = await SessionManager().containsKey("currentUser");
+  bool isOnline = await Tools().hasNetwork();
 
+  Widget mainPage;
+  if (isOnline) {
+    if (status) {
+      User? user = User.fromJson(await SessionManager().get("currentUser"));
+      status = user.status;
+    }
+    isLoggedIn
+        ? status
+            ? mainPage = const MainScreen(index: 0)
+            : mainPage = const CompleteProfileScreen()
+        : mainPage = const SplashScreen();
+  } else {
+    mainPage = const ConnectivityScreen();
+  }
   runApp(
     ScreenUtilInit(
       designSize: const Size(375, 812),

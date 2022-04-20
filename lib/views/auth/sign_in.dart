@@ -100,10 +100,18 @@ class _SignInScreenState extends State<SignInScreen> {
                   Center(
                     child: InkWell(
                       onTap: () async {
+                        setState(() {
+                          _isLoading = true;
+                        });
                         if (await Tools().loginFormValidator(
                             _email.text, _password.text, context)) {
                           await Auth().emailSignIn(
                               _email.text, _password.text, context);
+                          setState(() => _isLoading = false);
+                        } else {
+                          setState(() {
+                            _isLoading = false;
+                          });
                         }
                       },
                       child: Container(

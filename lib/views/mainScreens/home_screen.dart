@@ -285,7 +285,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       withNavBar: false,
                     );
                   } else {
-                    Navigator.pop(context);
                     pushNewScreen(
                       context,
                       screen: const GlycemicLogFirst(),

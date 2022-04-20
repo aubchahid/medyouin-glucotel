@@ -32,7 +32,7 @@ class _MesObjectifsScreenState extends State<MesObjectifsScreen> {
 
   // ignore: non_constant_identifier_names
   _SetState() async {
-    await SessionManager().get('user').then((value) async {
+    await SessionManager().get('currentUser').then((value) async {
       User user = User.fromJson(value);
       setState(() {
         glycemiePostMealT1.text = user.glycPostMealT1;
@@ -804,8 +804,8 @@ class _MesObjectifsScreenState extends State<MesObjectifsScreen> {
                       setState(() {
                         _saving = true;
                       });
-                      User user =
-                          User.fromJson(await SessionManager().get("user"));
+                      User user = User.fromJson(
+                          await SessionManager().get("currentUser"));
                       user.glycPostMealT1 = glycemiePostMealT1.text;
                       user.glycPostMealT2 = glycemiePostMealT2.text;
                       user.glycPostMealT3 = glycemiePostMealT3.text;

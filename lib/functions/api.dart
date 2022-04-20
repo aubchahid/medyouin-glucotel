@@ -471,7 +471,51 @@ class Api {
       "note": note,
       "action": "insertDetails"
     });
-    print(response.body);
     return json.decode(response.body);
+  }
+
+  Future<bool> checkCarnet(id) async {
+    var url = Uri.parse(api + "glucose");
+    final response = await http.post(url, body: {
+      "idCarnet": id.toString(),
+      "action": "checkCarent",
+    });
+    if (response.statusCode == 200) {
+      if (jsonDecode(response.body) == "7") {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      throw Exception('Error');
+    }
+  }
+
+  Future<double> getHba1c(id) async {
+    var url = Uri.parse(api + "glucose");
+    final response = await http.post(url, body: {
+      "idCarnet": id.toString(),
+      "action": "closedCarnet",
+    });
+    if (response.statusCode == 200) {
+      var hba1c = jsonDecode(response.body);
+      return hba1c;
+    } else {
+      throw Exception('Error');
+    }
+  }
+
+  Future<String> getLastHba1c(id) async {
+    var url = Uri.parse(api + "glucose");
+    final response = await http.post(url, body: {
+      "idCarnet": id.toString(),
+      "action": "getLastCarnet",
+    });
+    if (response.statusCode == 200) {
+      var hba1c = jsonDecode(response.body);
+      return hba1c;
+    } else {
+      throw Exception('Error');
+    }
   }
 }

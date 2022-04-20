@@ -10,6 +10,7 @@ import 'package:glucotel/functions/tools.dart';
 import 'package:glucotel/model/GlycemiqueLog.dart';
 import 'package:glucotel/model/user.dart';
 import 'package:glucotel/views/carnetGlycemic/details_carnet_glycemique.dart';
+import 'package:glucotel/views/mainScreens/main_screen.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:intl/intl.dart';
@@ -62,7 +63,13 @@ class _GlycemicLogFirstState extends State<GlycemicLogFirst> {
           appBar: AppBar(
             leading: InkWell(
               onTap: () {
-                Navigator.pop(context);
+                Navigator.pushReplacement(
+                  context,
+                  PageTransition(
+                    child: const MainScreen(index: 0),
+                    type: PageTransitionType.rightToLeft,
+                  ),
+                );
               },
               child: Icon(
                 Boxicons.bxs_chevron_left,
@@ -215,7 +222,7 @@ class _GlycemicLogFirstState extends State<GlycemicLogFirst> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
-                      "Créer mon compte",
+                      "Créer mon carnet glycémique",
                       style: TextStyle(
                         fontFamily: 'CairoBold',
                         fontSize: 14.sp,

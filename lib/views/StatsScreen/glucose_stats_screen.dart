@@ -436,46 +436,21 @@ class _GlucoseStatsState extends State<GlucoseStats> {
                 ),
               );
             },
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Row(
-                children: [
-                  Container(
-                    width: (MediaQuery.of(context).size.width / 2) - 22.w,
-                    height: 45.h,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Text(
-                      "Ajouter",
-                      style: TextStyle(
-                        fontFamily: 'CairoRegular',
-                        fontSize: 14.sp,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  const Spacer(),
-                  Container(
-                    width: (MediaQuery.of(context).size.width / 2) - 22.w,
-                    height: 45.h,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Text(
-                      "Estimation hba1c",
-                      style: TextStyle(
-                        fontFamily: 'CairoRegular',
-                        fontSize: 14.sp,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
+            child: Container(
+              width: (MediaQuery.of(context).size.width / 2) - 22.w,
+              height: 55.h,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text(
+                "Ajouter",
+                style: TextStyle(
+                  fontFamily: 'CairoRegular',
+                  fontSize: 14.sp,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),

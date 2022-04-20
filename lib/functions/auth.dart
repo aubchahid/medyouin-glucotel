@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:glucotel/functions/api.dart';
+import 'package:glucotel/functions/notification.dart';
 import 'package:glucotel/functions/tools.dart';
 import 'package:glucotel/model/user.dart' as appuser;
 import 'package:glucotel/views/auth/sign_in.dart';
@@ -317,6 +318,8 @@ class Auth {
               await FirebaseAuth.instance.signOut();
               _auth.signOut();
               _googleSignIn.signOut();
+              SessionManager().destroy();
+              NotificationService().cancelAllNotifications();
               await SessionManager().remove("currentUser");
               await SessionManager().remove("isLoggedIn");
               Navigator.pushReplacement(

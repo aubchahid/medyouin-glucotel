@@ -241,7 +241,6 @@ class _WaterReminderResultatState extends State<WaterReminderResultat> {
                       onTap: () async {
                         setState(() {
                           intake = intake + 300;
-
                           if (i == 0) {
                             i = 1;
                           }

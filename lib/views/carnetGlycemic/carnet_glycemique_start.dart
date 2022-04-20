@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:glucotel/functions/api.dart';
+import 'package:glucotel/functions/notification.dart';
 import 'package:glucotel/functions/tools.dart';
 import 'package:glucotel/model/GlycemiqueLog.dart';
 import 'package:glucotel/model/user.dart';
@@ -183,6 +184,10 @@ class _GlycemicLogFirstState extends State<GlycemicLogFirst> {
                     setState(() {
                       _isLoading = true;
                     });
+                    String end = DateFormat('dd-MM-yyyy hh:mm:ss')
+                        .format(DateTime(selectedDate.year, selectedDate.month,
+                            selectedDate.day + 6))
+                        .toString();
                     String startAt = DateFormat('dd-MM-yyyy')
                         .format(selectedDate)
                         .toString();
@@ -201,6 +206,16 @@ class _GlycemicLogFirstState extends State<GlycemicLogFirst> {
                         status: false,
                         dateS: DateFormat('dd-MM-yyyy').format(selectedDate),
                       );
+                      int uid = DateTime.now().microsecond + 151;
+                      DateTime dt =
+                          DateFormat('dd-MM-yyyy hh:mm:ss').parse(end);
+                      dt = dt.add(const Duration(hours: 12));
+                      NotificationService().scheduleNotification(
+                          uid,
+                          dt,
+                          "Carnet glycémique",
+                          "Vous pouvez voir votre hba1c estimé maintenant",
+                          "hba1c");
                       await SessionManager().set("carnet", log);
                       Tools().showAchievementView(context, "Créé avec succès.",
                           "Votre carnet glycémie a été créé avec succès.");

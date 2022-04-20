@@ -203,22 +203,46 @@ class _HBA1CResultatState extends State<HBA1CResultat> {
                         ),
                   80.verticalSpace,
                   isAfter
-                      ? Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20.w),
-                          child: Center(
-                            child: Text(
-                              isConditon
-                                  ? "Ce résultat est juste une estimation basée sur les données de glycémie que vous avez saisie.\n N.B: Ce calcul ne doit  pas être utilisé pour prendre des décisions ou faire des modifications thérapeutiques."
-                                  : "Votre carnet glycémique ne respecte pas les conditions, il faut au moins 2 valeurs par jour pour avoir une bonne estimation.",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Theme.of(context).primaryColorDark,
-                                fontSize: 14.sp,
-                                fontFamily: 'CairoSemiBold',
+                      ? isConditon
+                          ? Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20.w),
+                              child: RichText(
+                                text: TextSpan(
+                                  text:
+                                      'Ce résultat est juste une estimation basée sur les données de glycémie que vous avez saisie. ',
+                                  style: TextStyle(
+                                    color: Theme.of(context).primaryColorDark,
+                                    fontSize: 14.sp,
+                                    fontFamily: 'CairoSemiBold',
+                                  ),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                      text:
+                                          ' N.B: Ce calcul ne doit  pas être utilisé pour prendre des décisions ou faire des modifications thérapeutiques.!',
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 14.sp,
+                                        fontFamily: 'CairoBold',
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ),
-                        )
+                            )
+                          : Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20.w),
+                              child: Center(
+                                child: Text(
+                                  "Votre carnet glycémique ne respecte pas les conditions, il faut au moins 2 valeurs par jour pour avoir une bonne estimation.",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Theme.of(context).primaryColorDark,
+                                    fontSize: 14.sp,
+                                    fontFamily: 'CairoSemiBold',
+                                  ),
+                                ),
+                              ),
+                            )
                       : Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20.w),
                           child: Center(

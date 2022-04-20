@@ -123,9 +123,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         });
                         await Auth()
                             .emailSignUp(
-                                _fullname.text.replaceAll(' ', ''),
+                                _fullname.text,
                                 _phoneNo.text,
-                                _email.text,
+                                _email.text.replaceAll(' ', ''),
                                 _password.text,
                                 context)
                             .then((value) {

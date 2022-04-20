@@ -243,14 +243,27 @@ class _IndexGlycemiqueScreenState extends State<IndexGlycemiqueScreen> {
                         ),
                       ),
                       const Spacer(),
-                      Text(
-                        'Votre dépense énergétique : ' +
-                            (cal * 1.2).toStringAsFixed(0) +
-                            ' Calories',
-                        style: TextStyle(
-                          fontFamily: 'CairoSemiBold',
-                          fontSize: 14.sp,
-                          height: 1.4,
+                      RichText(
+                        text: TextSpan(
+                          text: 'Votre dépense énergétique : ',
+                          style: TextStyle(
+                            fontFamily: 'CairoSemiBold',
+                            fontSize: 14.sp,
+                            height: 1.4,
+                            color: Theme.of(context).primaryColorDark,
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text:
+                                  (cal * 1.2).toStringAsFixed(0) + ' Calories',
+                              style: TextStyle(
+                                fontFamily: 'CairoBold',
+                                fontSize: 14.sp,
+                                height: 1.4,
+                                color: Theme.of(context).primaryColorDark,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       const Spacer(),
@@ -292,14 +305,27 @@ class _IndexGlycemiqueScreenState extends State<IndexGlycemiqueScreen> {
                         ),
                       ),
                       const Spacer(),
-                      Text(
-                        'Votre dépense énergétique : ' +
-                            (cal * 1.375).toStringAsFixed(0) +
-                            ' Calories',
-                        style: TextStyle(
-                          fontFamily: 'CairoSemiBold',
-                          fontSize: 14.sp,
-                          height: 1.4,
+                      RichText(
+                        text: TextSpan(
+                          text: 'Votre dépense énergétique : ',
+                          style: TextStyle(
+                            fontFamily: 'CairoSemiBold',
+                            fontSize: 14.sp,
+                            height: 1.4,
+                            color: Theme.of(context).primaryColorDark,
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: (cal * 1.375).toStringAsFixed(0) +
+                                  ' Calories',
+                              style: TextStyle(
+                                fontFamily: 'CairoBold',
+                                fontSize: 14.sp,
+                                height: 1.4,
+                                color: Theme.of(context).primaryColorDark,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       const Spacer(),
@@ -341,17 +367,29 @@ class _IndexGlycemiqueScreenState extends State<IndexGlycemiqueScreen> {
                         ),
                       ),
                       const Spacer(),
-                      Text(
-                        'Votre dépense énergétique : ' +
-                            (cal * 1.55).toStringAsFixed(0) +
-                            ' Calories',
-                        style: TextStyle(
-                          fontFamily: 'CairoSemiBold',
-                          fontSize: 14.sp,
-                          height: 1.4,
+                      RichText(
+                        text: TextSpan(
+                          text: 'Votre dépense énergétique : ',
+                          style: TextStyle(
+                            fontFamily: 'CairoSemiBold',
+                            fontSize: 14.sp,
+                            height: 1.4,
+                            color: Theme.of(context).primaryColorDark,
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text:
+                                  (cal * 1.55).toStringAsFixed(0) + ' Calories',
+                              style: TextStyle(
+                                fontFamily: 'CairoBold',
+                                fontSize: 14.sp,
+                                height: 1.4,
+                                color: Theme.of(context).primaryColorDark,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      const Spacer(),
                     ],
                   ),
                 ),
@@ -390,14 +428,27 @@ class _IndexGlycemiqueScreenState extends State<IndexGlycemiqueScreen> {
                         ),
                       ),
                       const Spacer(),
-                      Text(
-                        'Votre dépense énergétique : ' +
-                            (cal * 1.725).toStringAsFixed(0) +
-                            ' Calories',
-                        style: TextStyle(
-                          fontFamily: 'CairoSemiBold',
-                          fontSize: 14.sp,
-                          height: 1.4,
+                      RichText(
+                        text: TextSpan(
+                          text: 'Votre dépense énergétique : ',
+                          style: TextStyle(
+                            fontFamily: 'CairoSemiBold',
+                            fontSize: 14.sp,
+                            height: 1.4,
+                            color: Theme.of(context).primaryColorDark,
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: (cal * 1.725).toStringAsFixed(0) +
+                                  ' Calories',
+                              style: TextStyle(
+                                fontFamily: 'CairoBold',
+                                fontSize: 14.sp,
+                                height: 1.4,
+                                color: Theme.of(context).primaryColorDark,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       const Spacer(),
@@ -439,14 +490,27 @@ class _IndexGlycemiqueScreenState extends State<IndexGlycemiqueScreen> {
                         ),
                       ),
                       const Spacer(),
-                      Text(
-                        'Votre dépense énergétique : ' +
-                            (cal * 1.9).toStringAsFixed(0) +
-                            ' Calories',
-                        style: TextStyle(
-                          fontFamily: 'CairoSemiBold',
-                          fontSize: 14.sp,
-                          height: 1.4,
+                      RichText(
+                        text: TextSpan(
+                          text: 'Votre dépense énergétique : ',
+                          style: TextStyle(
+                            fontFamily: 'CairoSemiBold',
+                            fontSize: 14.sp,
+                            height: 1.4,
+                            color: Theme.of(context).primaryColorDark,
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text:
+                                  (cal * 1.9).toStringAsFixed(0) + ' Calories',
+                              style: TextStyle(
+                                fontFamily: 'CairoBold',
+                                fontSize: 14.sp,
+                                height: 1.4,
+                                color: Theme.of(context).primaryColorDark,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       const Spacer(),

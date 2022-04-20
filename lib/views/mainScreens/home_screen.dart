@@ -309,7 +309,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     alignment: Alignment.center,
                     child: Text(
-                      'Mon carnet Glycemique',
+                      'Mon carnet glycémique',
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontFamily: 'CairoSemiBold',

@@ -96,7 +96,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                   ),
                   2.verticalSpace,
                   buildMenuItem(
-                    text: 'Mon Carnet Glycemique',
+                    text: 'Mon Carnet glycémique',
                     icon: Boxicons.bxs_book_content,
                     onClicked: () async {
                       bool isTrue =
@@ -136,7 +136,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                   ),
                   2.verticalSpace,
                   buildMenuItem(
-                    text: 'Info Diete',
+                    text: 'Comprendre le diabète',
                     icon: Boxicons.bxs_news,
                     onClicked: () {
                       Navigator.pop(context);
@@ -164,7 +164,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                   ),
                   2.verticalSpace,
                   buildMenuItem(
-                    text: 'IMC Calculatrice',
+                    text: 'Indice de masse corporelle',
                     icon: Boxicons.bxs_calculator,
                     onClicked: () {
                       Navigator.pop(context);
@@ -178,7 +178,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                   ),
                   2.verticalSpace,
                   buildMenuItem(
-                    text: 'Dépense énergétique Calculatrice',
+                    text: 'Dépense énergétique',
                     icon: FontAwesomeIcons.bolt,
                     onClicked: () {
                       Navigator.pop(context);

@@ -2,7 +2,6 @@
 
 import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:glucotel/functions/api.dart';
 import 'package:glucotel/functions/tools.dart';
@@ -21,7 +20,7 @@ class NewGlucoseStats extends StatefulWidget {
 }
 
 class _NewGlucoseStatsState extends State<NewGlucoseStats> {
-  TextEditingController _value = TextEditingController();
+  final TextEditingController _value = TextEditingController();
   List<DropdownMenuItem<ListItem>>? _dropdownTypeItems;
   ListItem? _type;
   String dateD = 'Choisissez la date', time = 'Choisissez l\'heure';

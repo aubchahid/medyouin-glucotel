@@ -953,7 +953,7 @@ class _EditMedicalFolderScreenState extends State<EditMedicalFolderScreen> {
                               bool isValid = true;
                               String message = 'S\'il vous plait entrer : ';
                               User user = User.fromJson(
-                                  await SessionManager().get("user"));
+                                  await SessionManager().get("currentUser"));
                               if (_type) {
                                 _insuline
                                     ? isValid == (_insulineDepuis.text == '-')
@@ -966,7 +966,7 @@ class _EditMedicalFolderScreenState extends State<EditMedicalFolderScreen> {
                                 user.size = _sizeController.text;
                                 user.weight = _weightController.text;
                                 user.typeDiabet = _typeDiabete;
-                                await SessionManager().set('user', user);
+                                await SessionManager().set('currentUser', user);
                                 MedicalFolder medicalFolder =
                                     MedicalFolder.fromJson(
                                   await SessionManager().get("medicalFolder"),

@@ -104,9 +104,13 @@ class _SignInScreenState extends State<SignInScreen> {
                           _isLoading = true;
                         });
                         if (await Tools().loginFormValidator(
-                            _email.text, _password.text, context)) {
+                            _email.text.replaceAll(' ', ''),
+                            _password.text,
+                            context)) {
                           await Auth().emailSignIn(
-                              _email.text, _password.text, context);
+                              _email.text.replaceAll(' ', ''),
+                              _password.text,
+                              context);
                           setState(() => _isLoading = false);
                         } else {
                           setState(() {

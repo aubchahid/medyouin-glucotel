@@ -861,7 +861,7 @@ class _NewMedicalFolderThreeState extends State<NewMedicalFolderThree> {
                                 .set("medicalFolder", medicalFolder)
                                 .then((value) async {
                               User user = User.fromJson(
-                                  await SessionManager().get("user"));
+                                  await SessionManager().get("currentUser"));
                               await Api()
                                   .folderMedical(medicalFolder, user)
                                   .then((value) {

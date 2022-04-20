@@ -904,7 +904,7 @@ class _EditMedicalFolderThreeScreenState
                                 .set("medicalFolder", medicalFolder)
                                 .then((value) async {
                               User user = User.fromJson(
-                                  await SessionManager().get("user"));
+                                  await SessionManager().get("currentUser"));
                               await Api()
                                   .updatefolderMedical(medicalFolder, user)
                                   .then((value) {

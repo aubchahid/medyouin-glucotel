@@ -173,57 +173,65 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ),
                     ),
-                    20.verticalSpace,
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          PageTransition(
-                            child: const ModifyImageScreen(),
-                            type: PageTransitionType.rightToLeft,
-                          ),
-                        );
-                      },
-                      child: Container(
-                        height: 65.h,
-                        width: 335.w,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).scaffoldBackgroundColor,
-                          borderRadius: BorderRadius.circular(12),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.2),
-                              spreadRadius: 5,
-                              blurRadius: 32,
-                              offset: const Offset(
-                                  0, 3), // changes position of shadow
-                            ),
-                          ],
-                        ),
-                        child: Row(
-                          children: [
-                            15.horizontalSpace,
-                            const Icon(
-                              Boxicons.bxs_image,
-                            ),
-                            15.horizontalSpace,
-                            Text(
-                              "Modifier l'image de profil",
-                              style: TextStyle(
-                                fontFamily: 'CairoSemiBold',
-                                fontSize: 16.sp,
-                                color: Theme.of(context).primaryColorDark,
+                    currentUser!.isGoogle
+                        ? Container()
+                        : Column(
+                            children: [
+                              20.verticalSpace,
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    PageTransition(
+                                      child: const ModifyImageScreen(),
+                                      type: PageTransitionType.rightToLeft,
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  height: 65.h,
+                                  width: 335.w,
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context)
+                                        .scaffoldBackgroundColor,
+                                    borderRadius: BorderRadius.circular(12),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.2),
+                                        spreadRadius: 5,
+                                        blurRadius: 32,
+                                        offset: const Offset(
+                                            0, 3), // changes position of shadow
+                                      ),
+                                    ],
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      15.horizontalSpace,
+                                      const Icon(
+                                        Boxicons.bxs_image,
+                                      ),
+                                      15.horizontalSpace,
+                                      Text(
+                                        "Modifier l'image de profil",
+                                        style: TextStyle(
+                                          fontFamily: 'CairoSemiBold',
+                                          fontSize: 16.sp,
+                                          color: Theme.of(context)
+                                              .primaryColorDark,
+                                        ),
+                                      ),
+                                      const Spacer(),
+                                      const Icon(
+                                        Boxicons.bx_chevron_right,
+                                      ),
+                                      15.horizontalSpace,
+                                    ],
+                                  ),
+                                ),
                               ),
-                            ),
-                            const Spacer(),
-                            const Icon(
-                              Boxicons.bx_chevron_right,
-                            ),
-                            15.horizontalSpace,
-                          ],
-                        ),
-                      ),
-                    ),
+                            ],
+                          ),
 
                     /* 20.verticalSpace,
                     InkWell(

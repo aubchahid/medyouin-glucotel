@@ -9,10 +9,8 @@ import 'package:glucotel/model/GlycemiqueLog.dart';
 import 'package:glucotel/model/Jour.dart';
 import 'package:glucotel/views/carnetGlycemic/add_carnet_glycemique.dart';
 import 'package:glucotel/views/carnetGlycemic/carnet_glycemique_start.dart';
-import 'package:glucotel/views/mainScreens/main_screen.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:intl/intl.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class GlycemiqueDetails extends StatefulWidget {
   const GlycemiqueDetails({Key? key}) : super(key: key);
@@ -193,7 +191,7 @@ class _GlycemiqueDetailsState extends State<GlycemiqueDetails> {
                   ),
                   alignment: Alignment.center,
                   child: Text(
-                    'Ajouter une valuer',
+                    'Ajouter une valeur',
                     style: TextStyle(
                       fontFamily: "CairoBold",
                       fontSize: 14.sp,

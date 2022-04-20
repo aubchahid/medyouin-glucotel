@@ -75,7 +75,7 @@ class Auth {
                 stepsPerDay: value["stepsPerDay"],
                 typeDiabet: value["typeDiabet"],
                 status: true,
-                isGoogle: true,
+                isGoogle: false,
               ),
             );
             Navigator.pushReplacement(

@@ -50,7 +50,8 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
           children: [
             buildHeader(
               urlImage: !widget.currentUser!.isGoogle
-                  ? "https://glucosql.medyouin.com/api-v2/pictures/default.png"
+                  ? "https://glucosql.medyouin.com/api-v2/pictures/" +
+                      widget.currentUser!.photoUrl
                   : widget.currentUser!.photoUrl,
               name: widget.currentUser!.fullname,
               email: widget.currentUser!.email,

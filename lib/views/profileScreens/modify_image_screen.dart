@@ -202,9 +202,9 @@ class _ModifyImageScreenState extends State<ModifyImageScreen> {
                                 .then((value) async {
                               if (value == "RECORD_UPDATED_SUCCESSFULLY") {
                                 User user = User.fromJson(
-                                    await SessionManager().get("user"));
+                                    await SessionManager().get("currentUser"));
                                 user.photoUrl = fileName!;
-                                await SessionManager().set('user', user);
+                                await SessionManager().set('currentUser', user);
                                 Navigator.pushReplacement(
                                   context,
                                   PageTransition(

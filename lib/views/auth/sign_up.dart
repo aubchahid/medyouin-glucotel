@@ -115,15 +115,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       if (await Tools().registerFormValidator(
                           _fullname.text,
                           _phoneNo.text,
-                          _email.text,
+                          _email.text.replaceAll(' ', ''),
                           _password.text,
                           context)) {
                         setState(() {
                           _isLoading = true;
                         });
                         await Auth()
-                            .emailSignUp(_fullname.text, _phoneNo.text,
-                                _email.text, _password.text, context)
+                            .emailSignUp(
+                                _fullname.text.replaceAll(' ', ''),
+                                _phoneNo.text,
+                                _email.text,
+                                _password.text,
+                                context)
                             .then((value) {
                           if (value == false) {
                             setState(() {

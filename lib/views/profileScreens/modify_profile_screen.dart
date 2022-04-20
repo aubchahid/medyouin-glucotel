@@ -302,7 +302,7 @@ class _ModifyProfilScreenState extends State<ModifyProfilScreen> {
                                   : _isSexeEmpty = true;
                             } else {
                               User user = User.fromJson(
-                                  await SessionManager().get('user'));
+                                  await SessionManager().get('currentUser'));
                               setState(() {
                                 user.fullname = _fullname.text;
                                 user.city = _city.text;
@@ -310,7 +310,7 @@ class _ModifyProfilScreenState extends State<ModifyProfilScreen> {
                                 user.sexe = _sexe!.value;
                                 user.birthdate = _birthdateController;
                               });
-                              await SessionManager().set('user', user);
+                              await SessionManager().set('currentUser', user);
                               Api().updaterProfile(user).then((value) {
                                 if (value == 'RECORD_UPDATED_SUCCESSFULLY') {
                                   Navigator.pop(context);

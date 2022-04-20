@@ -814,7 +814,7 @@ class _MesObjectifsScreenState extends State<MesObjectifsScreen> {
                       user.glycPreMealT3 = glycemiePreMealT3.text;
                       user.hba1c = hba1c.text;
                       user.stepsPerDay = stepsPerDay.text;
-                      await SessionManager().set('user', user);
+                      await SessionManager().set('currentUser', user);
                       await Api().updateUser(user).then((value) async {
                         if (value == "RECORD_CREATED_SUCCESSFULLY") {
                           Navigator.pop(context);

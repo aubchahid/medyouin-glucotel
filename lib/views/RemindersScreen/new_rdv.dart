@@ -391,7 +391,7 @@ class _NewRdvState extends State<NewRdv> {
                               context,
                               "Message d'erreur",
                               'Veuillez changer la date à une date future');
-                          if (selectedTime.minute < DateTime.now().minute) {
+                          if (selectedTime.minute <= DateTime.now().minute) {
                             valid = false;
                             Tools().showDesachievementView(
                                 context,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_session_manager/flutter_session_manager.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:glucotel/SplashScreen.dart';
 import 'package:glucotel/connectivity_screen.dart';
 //import 'package:glucotel/SplashScreen.dart';
@@ -41,7 +42,7 @@ void main() async {
     ScreenUtilInit(
       designSize: const Size(375, 812),
       minTextAdapt: true,
-      builder: (BuildContext context) => MaterialApp(
+      builder: (BuildContext context) => GetMaterialApp(
         localizationsDelegates: const [
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,

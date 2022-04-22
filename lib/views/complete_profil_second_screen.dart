@@ -942,7 +942,7 @@ class _CompleteProfileScreenSecondState
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Text(
-                            "Términer",
+                            "Terminer",
                             style: TextStyle(
                               fontFamily: 'CairoBold',
                               fontSize: 14.sp,

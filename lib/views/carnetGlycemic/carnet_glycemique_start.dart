@@ -181,52 +181,61 @@ class _GlycemicLogFirstState extends State<GlycemicLogFirst> {
               Center(
                 child: InkWell(
                   onTap: () async {
-                    setState(() {
-                      _isLoading = true;
-                    });
-                    String end = DateFormat('dd-MM-yyyy hh:mm:ss')
-                        .format(DateTime(selectedDate.year, selectedDate.month,
-                            selectedDate.day + 6))
-                        .toString();
-                    String startAt = DateFormat('dd-MM-yyyy')
-                        .format(selectedDate)
-                        .toString();
-                    String endAt = DateFormat('dd-MM-yyyy')
-                        .format(DateTime(selectedDate.year, selectedDate.month,
-                            selectedDate.day + 6))
-                        .toString();
-                    User? currentUser = await Tools().getCurrentUser();
-                    await Api()
-                        .insertLog(currentUser!.id, startAt, endAt)
-                        .then((value) async {
-                      GlycemiqueLog log = GlycemiqueLog(
-                        uid: int.parse(value),
-                        startAt: startAt,
-                        endAt: endAt,
-                        status: false,
-                        dateS: DateFormat('dd-MM-yyyy').format(selectedDate),
-                      );
-                      int uid = DateTime.now().microsecond + 151;
-                      DateTime dt =
-                          DateFormat('dd-MM-yyyy hh:mm:ss').parse(end);
-                      dt = dt.add(const Duration(hours: 12));
-                      NotificationService().scheduleNotification(
-                          uid,
-                          dt,
-                          "Carnet glycémique",
-                          "Vous pouvez voir votre hba1c estimé maintenant",
-                          "hba1c");
-                      await SessionManager().set("carnet", log);
-                      Tools().showAchievementView(context, "Créé avec succès.",
-                          "Votre carnet glycémie a été créé avec succès.");
-                      Navigator.pushReplacement(
-                        context,
-                        PageTransition(
-                          child: const GlycemiqueDetails(),
-                          type: PageTransitionType.rightToLeft,
-                        ),
-                      );
-                    });
+                    if (dateD == 'Choisissez la date') {
+                      Tools().showDesachievementView(
+                          context,
+                          "Message d'erreur",
+                          "Veuillez fournir une date correcte.");
+                    } else {
+                      setState(() {
+                        _isLoading = true;
+                      });
+                      String end = DateFormat('dd-MM-yyyy hh:mm:ss')
+                          .format(DateTime(selectedDate.year,
+                              selectedDate.month, selectedDate.day + 6))
+                          .toString();
+                      String startAt = DateFormat('dd-MM-yyyy')
+                          .format(selectedDate)
+                          .toString();
+                      String endAt = DateFormat('dd-MM-yyyy')
+                          .format(DateTime(selectedDate.year,
+                              selectedDate.month, selectedDate.day + 6))
+                          .toString();
+                      User? currentUser = await Tools().getCurrentUser();
+                      await Api()
+                          .insertLog(currentUser!.id, startAt, endAt)
+                          .then((value) async {
+                        GlycemiqueLog log = GlycemiqueLog(
+                          uid: int.parse(value),
+                          startAt: startAt,
+                          endAt: endAt,
+                          status: false,
+                          dateS: DateFormat('dd-MM-yyyy').format(selectedDate),
+                        );
+                        int uid = DateTime.now().microsecond + 151;
+                        DateTime dt =
+                            DateFormat('dd-MM-yyyy hh:mm:ss').parse(end);
+                        dt = dt.add(const Duration(hours: 12));
+                        NotificationService().scheduleNotification(
+                            uid,
+                            dt,
+                            "Carnet glycémique",
+                            "Vous pouvez voir votre hba1c estimé maintenant",
+                            "hba1c");
+                        await SessionManager().set("carnet", log);
+                        Tools().showAchievementView(
+                            context,
+                            "Créé avec succès.",
+                            "Votre carnet glycémie a été créé avec succès.");
+                        Navigator.pushReplacement(
+                          context,
+                          PageTransition(
+                            child: const GlycemiqueDetails(),
+                            type: PageTransitionType.rightToLeft,
+                          ),
+                        );
+                      });
+                    }
                   },
                   child: Container(
                     height: 55.h,

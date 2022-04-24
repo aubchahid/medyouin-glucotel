@@ -385,18 +385,15 @@ class _NewRdvState extends State<NewRdv> {
                       } else if (selectedDate.year == DateTime.now().year &&
                           selectedDate.month == DateTime.now().month &&
                           selectedDate.day == DateTime.now().day) {
-                        if (selectedTime.hour < DateTime.now().hour) {
-                          valid = false;
-                          Tools().showDesachievementView(
-                              context,
-                              "Message d'erreur",
-                              'Veuillez changer la date à une date future');
+                        if (selectedTime.hour <= DateTime.now().hour) {
                           if (selectedTime.minute <= DateTime.now().minute) {
                             valid = false;
                             Tools().showDesachievementView(
                                 context,
                                 "Message d'erreur",
                                 'Veuillez changer la date à une date future');
+                          } else {
+                            valid = true;
                           }
                         }
                       }
